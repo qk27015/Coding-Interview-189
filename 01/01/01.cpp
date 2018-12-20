@@ -152,6 +152,56 @@ bool canDelete(string s1, string s2)
 
 
 
+// 1.6 : 文字列の連続する数を使って文字列を圧縮する。
+// 6 / 189
+string compression(string str)
+{
+	vector<char> v;
+	for (int i = 0; i < str.length(); i++)
+	{
+		v.push_back(str[i]);
+
+		int charCnt = 1;
+		bool isContinuous = true;
+		while (isContinuous)
+		{
+			int j = i + 1;
+			if (j < str.length() && str[i] == str[j])
+			{
+				charCnt++;
+				i++;
+			}
+			else
+				isContinuous = false;
+		}
+		v.push_back('0' + charCnt);
+	}
+
+	string compressed = string(v.begin(), v.end());
+
+	return compressed.length() < str.length() ? compressed : str;
+}
+
+
+
+// 1.7 : NxNの行列に描かれた画像を追加の領域なしで90度回転させる。
+// 7 / 189
+// 追加領域なしのアルゴリズムが思いつかない。パス
+
+
+
+// 1.8 : MxNの行列について、要素が0であればその行と列をすべて0にする
+// 8 / 189
+// 問題の意味がわからない。パス
+
+
+
+// 1.9 : isSubstringメゾットを一度だけ使ってs2がs1を回転させたものか判定する。
+// 9 / 189
+// 問題の意味がわからない。パス
+
+
+
 int main()
 {
 	// 1.1
@@ -180,6 +230,12 @@ int main()
 	cout << canCreate("pale", "ple") << endl;
 	cout << canCreate("pale", "bale") << endl;
 	cout << canCreate("pale", "bake") << endl;
+	cout << endl;
+
+	// 1.6
+	cout << compression("aabcccccaaa") << endl;
+	cout << compression("abcd") << endl;
+	cout << endl;
 
 	return 0;
 }
