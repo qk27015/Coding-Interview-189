@@ -5,6 +5,29 @@ using namespace std;
 
 
 
+// 1.6 : 文字列の連続する数を使って文字列を圧縮する。
+// 6 / 189
+// stringをjavaのStringBuilderっぽく使った回答。※自分の回答でほぼ正解
+string compress(string str)
+{
+	string compressed;
+	int countConsecutive = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		countConsecutive++;
+
+		if (i + 1 >= str.length() || str[i] != str[i + 1])
+		{
+			compressed += str[i];
+			compressed += '0' + countConsecutive;
+			countConsecutive = 0;
+		}
+	}
+	return compressed.length() < str.length() ? compressed : str;
+}
+
+
+
 // 難
 // 1.7 : NxNの行列に描かれた画像を追加の領域なしで90度回転させる。
 // 7 / 189
@@ -150,6 +173,11 @@ bool isRotation(string s1, string s2)
 
 int main()
 {
+	// 1.6
+	cout << compress("aabcccccaaa") << endl;
+	cout << compress("abcd") << endl;
+	cout << endl;
+
 	// 1.7
 	int matrix[kNumRow][kNumRow];
 	initMatrix(matrix);
