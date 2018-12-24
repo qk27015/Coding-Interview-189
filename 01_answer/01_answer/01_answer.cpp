@@ -1,7 +1,93 @@
 ﻿#include "pch.h"
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
+
+
+
+// 1.1 : ある文字列が、全て固有であるかどうかを判定するアルゴリズムを実装
+// 1 / 189
+// boolの配列ではなく32ビット整数で判定できる
+bool isUniqueChars(string str)
+{
+	int checker = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		int val = str[i] - 'a' + 1;
+		if (checker & (1 << val))
+			return false;
+		checker |= 1 << val;
+	}
+	return true;
+}
+
+
+
+// 1.2 : 2つの文字列が、片方が片方の並べ替えになっているかを判定
+// 2 / 189
+// 正解
+
+
+
+// 1.3 : すべての空白文字を%20で置き換える
+// 3 / 189
+// 正解
+
+
+// 1.4 : 文字列が回文の順列(回文を作成できる)であるかを調べる
+// 4 / 189
+// 整数を一つ使うだけで実装できる。
+// 整数値から1減算したものとANDを取り、1ビットだけが1になっているかチェックする
+bool checkExactlyOneBitSet(int bitVector)
+{
+	return (bitVector & (bitVector - 1)) == 0;
+}
+// 整数のiビット目を切り替える
+int toggle(int bitVector, int index)
+{
+	if (index < 0) return bitVector;
+
+	int mask = 1 << index;
+	if ((bitVector & mask) == 0)
+	{
+		// 存在しない場合、そのビットを1にする
+		bitVector |= mask;
+	}
+	else
+	{
+		// 存在する場合、そのビットを0にする
+		bitVector &= ~mask;
+	}
+
+	return bitVector;
+
+}
+// 文字列に対するビットベクトルを作成する
+int createBitVector(string pharse)
+{
+	int bitVector = 0;
+	for (int i = 0; i < pharse.length(); i++)
+	{
+		int x = pharse[i] - 'a';
+		bitVector = toggle(bitVector, x);
+		
+	}
+	return bitVector;
+}
+// 呼び出す関数
+bool isPermutationOfPalindrome(string pharse)
+{
+	int bitVector = createBitVector(pharse);
+	// 偶数の文字のみ or 奇数が1個
+	return bitVector == 0 || checkExactlyOneBitSet(bitVector);
+}
+
+
+
+// 1.5 : 文字列1に対して、文字の挿入・削除・置換を一度だけ行い、文字列2を作成できるか調べる
+// 5 / 189
+// 正解
 
 
 
@@ -173,6 +259,24 @@ bool isRotation(string s1, string s2)
 
 int main()
 {
+	// 1.1
+	cout << isUniqueChars("abcdefxyz") << endl;
+	cout << isUniqueChars("abcdefxyza") << endl;
+	cout << endl;
+
+	// 1.2
+
+	// 1.3
+
+	// 1.4
+	cout << isPermutationOfPalindrome("tactcoapapa") << endl;
+	cout << isPermutationOfPalindrome("abba") << endl;
+	cout << isPermutationOfPalindrome("acbxyz") << endl;
+	cout << isPermutationOfPalindrome("ab") << endl;
+	cout << endl;
+
+	// 1.5
+
 	// 1.6
 	cout << compress("aabcccccaaa") << endl;
 	cout << compress("abcd") << endl;
