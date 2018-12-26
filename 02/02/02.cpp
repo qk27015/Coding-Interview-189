@@ -3,19 +3,66 @@
 
 #include "pch.h"
 #include <iostream>
+using namespace std;
+
+
+
+class Node {
+
+public:
+	Node *next;
+	int data;
+
+	Node(int d)
+	{
+		next = NULL;
+		data = d;
+	}
+
+	void append(int d)
+	{
+		Node *end = new Node(d);
+		Node *n = this;
+		while (n->next != NULL)
+		{
+			n = n->next;
+		}
+		n->next = end;
+	}
+};
+
+Node *deleteNode(Node *head, int d)
+{
+	Node *n = head;
+
+	if (n->data == d) return head->next;
+
+	while (n->next != NULL)
+	{
+		if (n->next->data == d)
+		{
+			n->next = n->next->next;
+			return head;
+		}
+		n = n->next;
+	}
+	return head;
+}
+
+
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Node *head = new Node(0);
+	head->append(1);
+	head->append(2);
+
+	deleteNode(head, 1);
+
+	Node *n = head;
+	while (n != NULL)
+	{
+		cout << n->data << endl;
+		n = n->next;
+	}
 }
-
-// プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー
-// プログラムのデバッグ: F5 または [デバッグ] > [デバッグの開始] メニュー
-
-// 作業を開始するためのヒント: 
-//    1. ソリューション エクスプローラー ウィンドウを使用してファイルを追加/管理します 
-//   2. チーム エクスプローラー ウィンドウを使用してソース管理に接続します
-//   3. 出力ウィンドウを使用して、ビルド出力とその他のメッセージを表示します
-//   4. エラー一覧ウィンドウを使用してエラーを表示します
-//   5. [プロジェクト] > [新しい項目の追加] と移動して新しいコード ファイルを作成するか、[プロジェクト] > [既存の項目の追加] と移動して既存のコード ファイルをプロジェクトに追加します
-//   6. 後ほどこのプロジェクトを再び開く場合、[ファイル] > [開く] > [プロジェクト] と移動して .sln ファイルを選択します
