@@ -3,6 +3,9 @@
 
 #include "pch.h"
 #include <iostream>
+#include <cmath>
+#include <vector>
+#include <string>
 using namespace std;
 
 
@@ -119,6 +122,82 @@ void punctuate(int x, Node *head)
 }
 
 
+
+// 2.5 各ノードの数が1桁の数、その和をもとめ連結リストを作り返す
+// 14 / 189
+Node *sumNode(Node *head1, Node *head2)
+{
+	int base = 1;
+	int num1 = 0;
+	for (Node *n = head1; n != NULL; n = n->next, base *= 10)
+	{
+		num1 += n->data * base;
+	}
+	base = 1;
+	int num2 = 0;
+	for (Node *n = head2; n != NULL; n = n->next, base *= 10)
+	{
+		num2 += n->data * base;
+	}
+	
+	int sum = num1 + num2;
+	int digit = log(sum) / log(10) + 1;
+	Node *head3 = new Node(sum / (int)pow(10, digit-1));
+	sum %= (int)pow(10, digit - 1); digit--;
+	for (; digit > 0; digit--)
+	{
+		head3->append(sum / (int)pow(10, digit - 1));
+		sum %= (int)pow(10, digit - 1);
+	}
+
+	return head3;
+}
+
+
+
+// 2.6 連結リストが回文になっているかを調べる
+// 15 / 189
+bool isParotum(Node *head)
+{
+	string str;
+	for (Node *n = head; n != NULL; n = n->next)
+	{
+		str += n->data + '0';
+	}
+
+	string s = str;
+	reverse(str.begin(), str.end());
+	
+
+	return !strcmp(s.c_str(), str.c_str());
+}
+
+
+
+// 2.7 2つのリストが共通かどうかを判定する
+// 16 / 189
+// 問題文の意味がわからないのでパス
+
+
+
+// 2.8 循環するループのリストが与えられたとき、循環する最初の部分を返す
+// 17 / 189
+Node *isLoop(Node *head)
+{
+	Node *usagi = head, *kame = head;
+	for (int i = 0; i < 100; i++)
+	{
+		usagi = usagi->next->next;
+		kame = kame->next;
+		if (usagi == kame)
+			return usagi;
+	}
+
+	return NULL;
+}
+
+
+
 int main()
 {
 	Node *head = new Node(0);
@@ -149,4 +228,30 @@ int main()
 	deleteAssignedNode(getBackNode(2, head));
 	printNode(head);
 	cout << endl << endl;
+
+	// 2.4
+
+	// 2.5
+	Node *head1 = new Node(7);
+	head1->append(1);
+	head1->append(6);
+	Node *head2 = new Node(5);
+	head2->append(9);
+	head2->append(2);
+	Node *head3 = sumNode(head1, head2);
+	printNode(head3);
+	cout << endl << endl;
+
+	// 2.6
+	cout << isParotum(head) << endl;
+	cout << endl << endl;
+
+	// 2.7
+
+	// 2.8
+	Node *n = head;
+	while (n->next != NULL) n = n->next;
+	n->next = head; // head(0) でループさせる。
+	n = isLoop(head);
+	cout << n->data << endl;
 }
