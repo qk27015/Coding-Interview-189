@@ -249,9 +249,8 @@ int main()
 	// 2.7
 
 	// 2.8
-	Node *n = head;
-	while (n->next != NULL) n = n->next;
-	n->next = head; // head(0) でループさせる。
+	Node *n = getBackNode(2, head);
+	n->next = getBackNode(4, head);
 	n = isLoop(head);
 	cout << n->data << endl;
 }
