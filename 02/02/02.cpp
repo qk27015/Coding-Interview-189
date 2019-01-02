@@ -238,6 +238,7 @@ int main()
 	Node *head2 = new Node(5);
 	head2->append(9);
 	head2->append(2);
+	head2->append(1);
 	Node *head3 = sumNode(head1, head2);
 	printNode(head3);
 	cout << endl << endl;
